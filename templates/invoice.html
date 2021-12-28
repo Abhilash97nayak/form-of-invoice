@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+
+function add(){
+var a,b,c,e,d;
+a=Number(document.getElementById("a1").value);
+b=Number(document.getElementById("a2").value);
+d=Number(document.getElementById("a3").value);
+e=Number(document.getElementById("a4").value);
+c= a + b + e + d;
+document.getElementById("add").value= c;
+}
+
+
+</script>
+
+ <style>
+ table{
+     width:100%;
+     border: 1px solid white;
+      border-collapse: collapse;
+	  padding:40%;
+	  text-align: left;
+     }
+  td {
+      background-color: #96D4D4;
+      }
+	 
+ input{
+	 width:70%;
+	 }
+	th{
+	 width:20%;
+	 }
+ 
+ </style>
+</head>
+<body>
+ <center>
+   <h2>INVOICE</h2>
+      <table id="Table1" method="POST" action="invoice">
+          {% csrf_token %}
+	  	  
+         <tr>
+          <td colspan=2>Buyername<input type="text" id="bname" name="bname" placeholder="enter buyername" ></td>
+          <td colspan=2>Sellername<input type="text" id="sname" name="sname" placeholder="enter sellername"></td><p></tr>
+         <tr>
+          <td colspan=2>Address<input type="text" id="baddress" name="baddress" placeholder="enter buyeraddress"></td>
+          <td  colspan=2>Address<input type="text" id="saddress"name="saddress" placeholder="enter seller address"></td><p></tr>
+         <tr>
+           <td  colspan=2>Buyernumber<input type="number" id="bno" name="bno" placeholder="enter buyernumber"></td>
+           <td  colspan=2>Seller number<input type="number" id="sno"name="sno" placeholder="enter sellernumber"></td><p></tr>
+		  <tr>
+           <th>slno</th>
+           <th>product</th>
+           <th>Quantity</th>
+		   <th>amount</th></tr> 
+		  <tr>
+            <td><input type="number" id="sl1"name="sl1"></td>
+            <td><input type="text" id="p1" name="p1"></td>
+            <td><input type="number" id="q1"name="q1"></td>
+            <td><input type="number" id="a1"name="a1"</td></tr>
+		  <tr>
+            <td><input type="number" id="sln2"name="sl2"></td>
+            <td><input type="text" id="p2"name="p2"></td>
+            <td><input type="number" id="q2"name="q2"></td>
+            <td><input type="number" id="a2"name="a2" ></td></tr>
+		  <tr>
+		  
+            <td><input type="number" id="sln3"name="sl3"></td>
+            <td><input type="text" id="p3"name="p3"></td>
+            <td><input type="number" id="q3" name="q3"></td>
+            <td><input type="number" id="a3" name="a3" ></td></tr>
+		  <tr>
+            <td><input type="number" id="sln4"name="sl4"></td>
+            <td><input type="text" id="p4"name="p4"></td>
+            <td><input type="number" id="q4" name="q4"></td>
+            <td><input type="number" id="a4"name="a4" ></td></tr>
+		  <tr>
+            <td colspan=3>Estimated</td>
+            <td><input id="add" placeholder="click me for estimated value" onclick="add()"name="add"></td></tr>	
+          			
+           
+       </table>
+     
+ </center> 
+ <input type="button" id="submit" value="submit" onclick="submit()" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        function submit() {
+            html2canvas(document.getElementById('Table1'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("invoice".pdf");
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
